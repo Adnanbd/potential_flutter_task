@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:potential_task/modules/home/components/single.issue.card.v.dart';
 
 class HomeView extends ConsumerWidget {
   const HomeView({super.key});
@@ -24,9 +25,7 @@ class HomeView extends ConsumerWidget {
             child: ListView.builder(
               itemCount: 20, // Replace with your actual data length
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text('Item $index'),
-                );
+                return const SingleIssueCardView();
               },
             ),
           ),
