@@ -12,6 +12,12 @@ The Flutter GitHub Issues Viewer is a mobile app that displays a list of issues 
 - Loading indicator during data retrieval.
 - Error message presentation in case of data loading failure.
 
+## Screentshots
+
+| Home View  | Search View |
+| ------------- | ------------- |
+| <img src="https://raw.githubusercontent.com/Adnanbd/potential_flutter_task/main/screenshots/ss1.png" width =300 > | <img src="https://raw.githubusercontent.com/Adnanbd/potential_flutter_task/main/screenshots/ss2.png" width =300 >  |
+
 ## GitHub API
 
 The app utilizes the following GitHub APIs:
