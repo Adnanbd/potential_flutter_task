@@ -14,6 +14,7 @@ class MainApp extends StatelessWidget {
     return const ProviderScope(
       child: MaterialApp(
         home: HomeView(),
+        debugShowCheckedModeBanner: false,
       ),
     );
   }
