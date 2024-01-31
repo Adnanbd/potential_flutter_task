@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:potential_task/modules/home/components/helper/convert.label.to.menu.item.dart';
+import 'package:search_choices/search_choices.dart';
+
+import 'package:potential_task/modules/home/components/helper/on.filter.dart';
 import 'package:potential_task/modules/home/components/label.v.dart';
 import 'package:potential_task/modules/home/model/git.issue.m.dart';
 import 'package:potential_task/modules/home/provider/label.p.dart';
-import 'package:search_choices/search_choices.dart';
 
 class SearchField extends ConsumerWidget {
   const SearchField({super.key});
@@ -15,36 +18,44 @@ class SearchField extends ConsumerWidget {
     List<int> selectedItemsMultiCustomDisplayDialog = [];
 
     return fetchedLabels.when(data: (data) {
-      List<DropdownMenuItem<String>> gg = List<DropdownMenuItem<String>>.generate(
-          data?.length ?? 0,
-          (index) => DropdownMenuItem<String>(
-                value: '${data?[index].name}',
-                child: Text('${data?[index].name}'),
-              ));
-      return SearchChoices.multiple(
-        items: gg,
-        selectedItems: selectedItemsMultiCustomDisplayDialog,
-        hint: "Select label",
-        searchHint: "Select label",
-        onChanged: (value) {
-          selectedItemsMultiCustomDisplayDialog = value;
-        },
-        isExpanded: true,
-        selectedValueWidgetFn: (item) {
-          return (LabelView(label: Label(name: item)));
-        },
-        selectedAggregateWidgetFn: (List<Widget> list) {
-          return (Column(children: [
-            Text("${list.length} Label Selected"),
-            Wrap(children: list),
-          ]));
-        },
-        
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: const Color.fromARGB(255, 106, 106, 106),
+              width: .8,
+            ),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: SearchChoices.multiple(
+            items: convertLabelToMenuItem(data),
+            selectedItems: selectedItemsMultiCustomDisplayDialog,
+            hint: "Filter by label",
+            searchHint: "Select label",
+            clearSearchIcon: const Icon(Icons.search),
+            onChanged: (value) {
+              selectedItemsMultiCustomDisplayDialog = value;
+              onFilter(value, ref, data);
+            },
+            fieldDecoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            isExpanded: true,
+            selectedValueWidgetFn: (item) {
+              return (LabelView(label: Label(name: item)));
+            },
+            selectedAggregateWidgetFn: (List<Widget> list) {
+              return (Wrap(children: list));
+            },
+            closeButton: 'Filter',
+          ),
+        ),
       );
     }, error: (r, t) {
-      return const SizedBox();
+      return const Center(child: Text('Something Wrong!'));
     }, loading: () {
-      return const SizedBox();
+      return const Center(child: Text('Loading Labels ...'));
     });
   }
 }

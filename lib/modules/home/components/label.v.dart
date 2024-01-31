@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show BuildContext, Card, Colors, EdgeInsets, Padding, Text, Widget;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:potential_task/modules/home/model/git.issue.m.dart';
 

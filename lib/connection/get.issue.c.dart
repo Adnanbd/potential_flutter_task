@@ -1,15 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show debugPrint;
 import 'package:http/http.dart' as http;
 
 import 'package:potential_task/modules/home/model/git.issue.m.dart';
 import 'package:potential_task/utils/utils.dart';
 
-Future<List<GitIssueModel>?> getIssues({int pageNo = 1, int perPage = 10}) async {
+Future<List<GitIssueModel>?> getIssues({int pageNo = 1, int perPage = 10, String labels = ''}) async {
   try {
-    var request = http.Request('GET', Uri.parse('$baseUrl/issues?per_page=$perPage&page=$pageNo'));
+    var request = http.Request('GET', Uri.parse('$baseUrl/issues?per_page=$perPage&page=$pageNo&labels=$labels'));
 
     http.StreamedResponse response = await request.send();
 

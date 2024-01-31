@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart' show BuildContext, MaterialApp, StatelessWidget, Widget, runApp;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show ProviderScope;
 import 'package:potential_task/modules/home/view/home.v.dart';
 
 void main() {

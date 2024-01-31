@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:potential_task/connection/get.label.c.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import 'package:potential_task/connection/get.label.c.dart';
 import 'package:potential_task/modules/home/model/git.issue.m.dart';
 
 part 'label.p.g.dart';
@@ -21,7 +22,6 @@ Future<List<Label>> getAllLabels() async {
   int page = 1;
 
   while (true) {
-    // Construct the API endpoint URL with pagination
     final t = await getLabels(pageNo: page) ?? [];
     if (t.isEmpty) {
       break;
@@ -32,3 +32,5 @@ Future<List<Label>> getAllLabels() async {
 
   return labels;
 }
+
+final selectedListOfLabels = StateProvider<List<Label>>((ref) => []);

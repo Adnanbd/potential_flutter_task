@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show debugPrint;
 import 'package:http/http.dart' as http;
 
 import 'package:potential_task/modules/home/model/git.issue.m.dart';
@@ -28,4 +28,16 @@ Future<List<Label>?> getLabels({int pageNo = 1}) async {
     debugPrint('Something went wrong ${e.toString()}');
   }
   return null;
+}
+
+List<Label> indexToLabelList(List<Label> list, List<int> indexes) {
+  List<Label> result = [];
+
+  for (int index in indexes) {
+    if (index >= 0 && index < list.length) {
+      result.add(list[index]);
+    }
+  }
+
+  return result;
 }

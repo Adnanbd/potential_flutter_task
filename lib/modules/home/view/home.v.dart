@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:potential_task/modules/home/components/search.field.dart';
 import 'package:potential_task/modules/home/components/single.issue.card.v.dart';
 import 'package:potential_task/modules/home/provider/home.p.dart';
+import 'package:potential_task/modules/home/provider/label.p.dart';
 
 class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
@@ -32,9 +34,12 @@ class _HomeViewState extends ConsumerState<HomeView> {
   @override
   Widget build(BuildContext context) {
     final homeData = ref.watch(homeProvider);
+    final labels = ref.read(selectedListOfLabels);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter Search Example'),
+        title: const Text('Flutter Issues'),
+        centerTitle: true,
+        backgroundColor: Colors.amber.withOpacity(.5),
       ),
       body: Column(
         children: [
@@ -43,30 +48,33 @@ class _HomeViewState extends ConsumerState<HomeView> {
             child: homeData.when(
               data: (data) {
                 if (data == null) {
-                  return const Text('No Data');
+                  return const Text('No Data Found. Try Again!');
                 }
-
-                return ListView.builder(
-                  controller: scrollController,
-                  itemCount: data.length + 1,
-                  itemBuilder: (context, index) {
-                    if (index < data.length) {
-                      return SingleIssueCardView(
-                        gitIssue: data[index],
+                return data.isEmpty
+                    ? const Center(child: Text('No Issue Found. Try Again!'))
+                    : ListView.builder(
+                        controller: scrollController,
+                        itemCount: data.length + 1,
+                        itemBuilder: (context, index) {
+                          if (index < data.length) {
+                            return SingleIssueCardView(
+                              gitIssue: data[index],
+                            );
+                          } else {
+                            return labels.isEmpty
+                                ? const Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  )
+                                : const SizedBox();
+                          }
+                        },
                       );
-                    } else {
-                      return const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 16.0),
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
-                    }
-                  },
-                );
               },
               error: (error, t) {
-                return const Text('Error');
+                return const Text('Something Wrong. Try again!');
               },
               loading: () {
                 return const Center(child: SizedBox(height: 60, width: 60, child: CircularProgressIndicator()));
