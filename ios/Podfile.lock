@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - search_choices (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - search_choices (from `.symlinks/plugins/search_choices/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  search_choices:
+    :path: ".symlinks/plugins/search_choices/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  search_choices: b50731e8c425078048f681f39c34375c58d6ce8d
+
+PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
+
+COCOAPODS: 1.14.2

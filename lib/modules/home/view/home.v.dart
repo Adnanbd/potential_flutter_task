@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:potential_task/modules/home/components/search.field.dart';
 import 'package:potential_task/modules/home/components/single.issue.card.v.dart';
 import 'package:potential_task/modules/home/provider/home.p.dart';
 
@@ -37,14 +38,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
       ),
       body: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search...',
-              ),
-            ),
-          ),
+          const SearchField(),
           Expanded(
             child: homeData.when(
               data: (data) {
