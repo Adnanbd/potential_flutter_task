@@ -15,7 +15,7 @@ Future<List<GitIssueModel>?> getIssues({int pageNo = 1, int perPage = 10}) async
 
     if (response.statusCode == 200) {
       final body = await response.stream.bytesToString();
-      debugPrint('GetProfileInfo XY: $body');
+      //debugPrint('GetProfileInfo XY: $body');
       final issueList = json.decode(body);
 
       return issueList == null ? [] : List<GitIssueModel>.from(issueList!.map((x) => GitIssueModel.fromJson(x)));

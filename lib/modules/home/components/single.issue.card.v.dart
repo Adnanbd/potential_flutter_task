@@ -22,6 +22,7 @@ class SingleIssueCardView extends ConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -61,9 +62,12 @@ class SingleIssueCardView extends ConsumerWidget {
               const SizedBox(
                 height: 10,
               ),
-              Row(
-                children: List<Widget>.generate(
-                    gitIssue.labels?.length ?? 0, (index) => LabelView(label: gitIssue.labels?[index])),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: List<Widget>.generate(
+                      gitIssue.labels?.length ?? 0, (index) => LabelView(label: gitIssue.labels?[index])),
+                ),
               ),
             ],
           ),

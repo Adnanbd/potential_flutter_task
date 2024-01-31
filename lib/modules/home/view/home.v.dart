@@ -3,11 +3,33 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:potential_task/modules/home/components/single.issue.card.v.dart';
 import 'package:potential_task/modules/home/provider/home.p.dart';
 
-class HomeView extends ConsumerWidget {
+class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends ConsumerState<HomeView> {
+  ScrollController scrollController = ScrollController();
+  @override
+  void initState() {
+    scrollController.addListener(() {
+      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+        ref.watch(homeProvider.notifier).fetch();
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final homeData = ref.watch(homeProvider);
     return Scaffold(
       appBar: AppBar(
@@ -29,12 +51,23 @@ class HomeView extends ConsumerWidget {
                 if (data == null) {
                   return const Text('No Data');
                 }
+
                 return ListView.builder(
-                  itemCount: data.length, // Replace with your actual data length
+                  controller: scrollController,
+                  itemCount: data.length + 1,
                   itemBuilder: (context, index) {
-                    return SingleIssueCardView(
-                      gitIssue: data[index],
-                    );
+                    if (index < data.length) {
+                      return SingleIssueCardView(
+                        gitIssue: data[index],
+                      );
+                    } else {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
                   },
                 );
               },
@@ -42,7 +75,7 @@ class HomeView extends ConsumerWidget {
                 return const Text('Error');
               },
               loading: () {
-                return const CircularProgressIndicator();
+                return const Center(child: SizedBox(height: 60, width: 60, child: CircularProgressIndicator()));
               },
             ),
           ),
